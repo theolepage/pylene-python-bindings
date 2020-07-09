@@ -29,9 +29,10 @@ if (NOT CMAKE_BUILD_TYPE)
 endif()
 
 # Sources
-add_library(SRC
+set(SRC
     src/example.cpp
     )
+add_library(SRC_LIB ${SRC})
 include_directories(src)
 
 # TESTS
@@ -41,7 +42,8 @@ set(SRC_TESTS
     )
 
 # PYBIND (TEST FIXME)
-pybind11_add_module(CPPA SOURCES)
+# add_subdirectory(pybind11)
+pybind11_add_module(CPPA ${SRC})
 
 # TESTS
 find_package(GTest)
@@ -55,10 +57,11 @@ if (${GTEST_FOUND})
         string(REGEX REPLACE "[^/]*/" "" TEST_NAME ${F_WITHOUT_EXT})
 
         # Create an executable with all sources and lib needed
-        add_executable(${TEST_NAME} EXCLUDE_FROM_ALL ${f})
+        add_executable(${TEST_NAME} ${f})
         target_link_libraries(${TEST_NAME} PRIVATE
-            SRC
+            SRC_LIB
             ${GTEST_BOTH_LIBRARIES}
+            Pylene::Pylene
         )
 
         # Add the executable created to the test list of ctest
