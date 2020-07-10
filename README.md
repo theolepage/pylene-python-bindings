@@ -8,7 +8,7 @@ Start a Python3 interpreter in the folder of the generated `pylene.cpython-38-x8
 
 ```python
 import pylene as pln
-pln.test()
+pln.add(5, 8)
 ```
 
 ## First install
@@ -26,6 +26,16 @@ pln.test()
 2. `conan remote add lrde-public https://artifactory.lrde.epita.fr/artifactory/api/conan/lrde-public`
 3. `conan install .. --build missing -s compiler.cppstd=20`
 4.  `cmake ..; make`
+
+## To-Do
+
+- [ ] Write methods to convert numpy arrays <-> mln::ndbuffer_image
+- [ ] Compilation: make GTest work
+
+## Resources
+
+- [https://gitlab.lrde.epita.fr/olena/pylene](https://gitlab.lrde.epita.fr/olena/pylene)
+- [https://pybind11.readthedocs.io/en/master/basics.html](https://pybind11.readthedocs.io/en/master/basics.html)
 
 ## Authors
 
