@@ -7,20 +7,15 @@ Polymorphisme statique/dynamique pour Python.
 Start a Python3 interpreter in the folder of the generated `pylene.cpython-38-x86_64-linux-gnu.so`.
 
 ```python
+import numpy as np
 import pylene as pln
-pln.add(5, 8)
+
+arr = np.array([[1, 0], [0, 1]])
+
+pln.morpho.dilation(arr)
 ```
 
-## First install
-
-### Build pybind11
-
-1. `mkdir include; cd include`
-2. `git clone https://github.com/pybind/pybind11.git`
-3. `cd pybind11; mkdir build; cd build`
-4. `sudo make install`
-
-### Build this project
+## Build
 
 1. Create the build directory at the root of the repository: `mkdir build && cd build` (for releases) or `mkdir build_debug && cd build_debug`
 2. `conan remote add lrde-public https://artifactory.lrde.epita.fr/artifactory/api/conan/lrde-public`

@@ -1,5 +1,6 @@
 [requires]
 pylene/head@lrde/stable
+pybind11/2.4.3
 
 [generators]
 cmake_find_package
