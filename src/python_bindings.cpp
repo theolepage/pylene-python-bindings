@@ -1,20 +1,33 @@
+#include <iostream>
 #include <pybind11/pybind11.h>
+#include <pybind11/numpy.h>
 
 #include "matrix.hpp"
 
 namespace py = pybind11;
 
-int add(int i, int j)
+void i_do_nothing();
+
+class morpho
 {
-    py::print(1, 2.0, "three");
-    return i + j;
-}
+public:
+    static int dilation(py::array_t<double> array)
+    {
+        i_do_nothing();
+        std::cout << "dilation\n";
+
+        return 17;
+    }
+
+    // To-Do: erosion, opening, closing
+};
 
 PYBIND11_MODULE(pylene, m)
 {
     m.doc() = "Python bindings for Pylene library";
 
-    // m.def("add", &add, "A function which adds two numbers");
+    py::class_<morpho>(m, "morpho")
+        .def_static("dilation", &morpho::dilation);
 
     // py::class_<mln::ndbuffer_image<float, 1>>(m, "Matrix", py::buffer_protocol())
     //     // Construct from a buffer, python -> c++
@@ -30,16 +43,16 @@ PYBIND11_MODULE(pylene, m)
     //         // return v;
     //     }));
 
-    py::class_<Matrix>(m, "Matrix", py::buffer_protocol())
-        // Construct from a buffer, python -> c++
-        .def(py::init([](py::buffer const b)
-        {
-            py::buffer_info info = b.request();
-            if (info.format != py::format_descriptor<float>::format() || info.ndim != 2)
-                throw std::runtime_error("Incompatible buffer format!");
+    // py::class_<Matrix>(m, "Matrix", py::buffer_protocol())
+    //     // Construct from a buffer, python -> c++
+    //     .def(py::init([](py::buffer const b)
+    //     {
+    //         py::buffer_info info = b.request();
+    //         if (info.format != py::format_descriptor<float>::format() || info.ndim != 2)
+    //             throw std::runtime_error("Incompatible buffer format!");
 
-            auto v = new Matrix(info.shape[0], info.shape[1]);
-            memcpy(v->data(), info.ptr, sizeof(float) * (size_t) (v->rows() * v->cols()));
-            return v;
-        }));
+    //         auto v = new Matrix(info.shape[0], info.shape[1]);
+    //         memcpy(v->data(), info.ptr, sizeof(float) * (size_t) (v->rows() * v->cols()));
+    //         return v;
+    //     }));
 }

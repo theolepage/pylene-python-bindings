@@ -1,5 +1,4 @@
 [requires]
-gtest/1.8.1
 pylene/head@lrde/stable
 
 [generators]
@@ -7,4 +6,4 @@ cmake_find_package
 cmake_paths
 
 [options]
-gtest:build_gmock=False
+pylene:shared=True

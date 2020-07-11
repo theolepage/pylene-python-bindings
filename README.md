@@ -29,8 +29,8 @@ pln.add(5, 8)
 
 ## To-Do
 
-- [ ] Write methods to convert numpy arrays <-> mln::ndbuffer_image
 - [ ] Compilation: make GTest work
+- [ ] Compilation: load pybind11 with conan
 
 ## Resources
 
