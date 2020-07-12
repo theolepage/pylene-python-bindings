@@ -1,19 +1,15 @@
 #pragma once
 
+#include <iostream>
 #include <mln/core/image/ndbuffer_image.hpp>
 
-#include <pybind11/pybind11.h>
-#include <pybind11/numpy.h>
-
-namespace py = pybind11;
-
-mln::ndbuffer_image numpy_to_ndbuffer(py::array_t<double> array)
+template <typename T>
+mln::ndbuffer_image numpy_to_ndbuffer(py::array_t<T> array)
 {
     py::buffer_info info = array.request();
 
-    // Check buffer values type
-    if (info.format != py::format_descriptor<double>::format())
-        throw std::runtime_error("Invalid buffer type.");
+    // FIXME: For some reason omitting this line causes a segfault.
+    py::format_descriptor<T>::format();
 
     int ndim = info.ndim;
 
@@ -35,7 +31,8 @@ mln::ndbuffer_image numpy_to_ndbuffer(py::array_t<double> array)
                                             false);
 }
 
-py::array_t<double> ndbuffer_to_numpy(mln::ndbuffer_image buffer)
+template <typename T>
+py::array_t<T> ndbuffer_to_numpy(mln::ndbuffer_image buffer)
 {
     int ndim = buffer.pdim();
 
@@ -51,11 +48,11 @@ py::array_t<double> ndbuffer_to_numpy(mln::ndbuffer_image buffer)
 
     auto info = py::buffer_info(
         buffer.buffer(),
-        sizeof(double),
-        py::format_descriptor<double>::format(),
+        sizeof(T),
+        py::format_descriptor<T>::format(),
         ndim,
         shape,
         strides
     );
-    return py::array_t<double>(info);
+    return py::array_t<T>(info);
 }

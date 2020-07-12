@@ -14,6 +14,8 @@ include_directories("src")
 
 # Main library
 set(SRC
+    #include/pln/core/morpho.cpp
+    #include/pln/core/se.cpp
     src/python_bindings.cpp
 )
 pybind11_add_module(pylene SHARED ${SRC})
