@@ -20,6 +20,7 @@ PYBIND11_MODULE(pylene, m)
 
     py::class_<py_morpho>(m, "morpho")
         // Numpy types: https://numpy.org/devdocs/user/basics.types.html
+        .def_static("dilation", &py_morpho::dilation<bool>)
 
         .def_static("dilation", &py_morpho::dilation<int8_t>)
         .def_static("dilation", &py_morpho::dilation<int16_t>)
