@@ -31,9 +31,6 @@ PYBIND11_MODULE(pylene, m)
         .def_static("dilation", &py_morpho::dilation<uint32_t>)
         .def_static("dilation", &py_morpho::dilation<uint64_t>)
 
-        .def_static("dilation", &py_morpho::dilation<intptr_t>)
-        .def_static("dilation", &py_morpho::dilation<uintptr_t>)
-
         .def_static("dilation", &py_morpho::dilation<float>)
         .def_static("dilation", &py_morpho::dilation<double>);
 }
