@@ -2,6 +2,7 @@
 
 #include <iostream>
 #include <mln/core/image/ndbuffer_image.hpp>
+#include <mln/core/image_format.hpp>
 
 template <typename T>
 mln::ndbuffer_image numpy_to_ndbuffer(py::array_t<T> array)
@@ -16,7 +17,7 @@ mln::ndbuffer_image numpy_to_ndbuffer(py::array_t<T> array)
         shape[i] = info.shape[i];
 
     return mln::ndbuffer_image::from_buffer(static_cast<std::byte*>(info.ptr),
-                                            mln::sample_type_id::INT8,
+                                            mln::sample_type_traits<T>::id(),
                                             ndim,
                                             shape,
                                             nullptr,
