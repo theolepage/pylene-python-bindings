@@ -25,7 +25,6 @@ pln.morpho.dilation(arr)
 ## To-Do
 
 - [ ] Compilation: make GTest work
-- [ ] Compilation: load pybind11 with conan
 
 ## Resources
 
