@@ -55,6 +55,7 @@ public:
 
     static py_se create_mask(py::array_t<int, py_array_params>)
     {
+        // FIXME: Converting py::array_t to initializer_list seems impossible.
         return py_se(my_mask({}));
     }
 

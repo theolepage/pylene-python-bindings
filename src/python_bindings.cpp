@@ -1,7 +1,3 @@
-// TO-DO
-// - [ ] my_mask intializer list from Python
-// - [ ] Try to template py::array
-
 #include <pybind11/pybind11.h>
 #include <pybind11/numpy.h>
 
