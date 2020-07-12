@@ -1,45 +1,41 @@
-#include <pybind11/pybind11.h>
+#include <iostream>
 
-#include "matrix.hpp"
+#include <mln/core/image/ndbuffer_image.hpp>
+
+#include <pybind11/pybind11.h>
+#include <pybind11/numpy.h>
 
 namespace py = pybind11;
 
-int add(int i, int j)
+mln::ndbuffer_image numpy_to_ndbuffer(py::array_t<double>)
 {
-    py::print(1, 2.0, "three");
-    return i + j;
+    return mln::ndbuffer_image();
 }
+
+py::array_t<double> ndbuffer_to_numpy(mln::ndbuffer_image)
+{
+    return py::array_t<double>();
+}
+
+class morpho
+{
+public:
+    static py::array_t<double> dilation(py::array_t<double> array)
+    {
+        auto ndbuffer_image = numpy_to_ndbuffer(array);
+
+        std::cout << "function: dilation" << std::endl; // FIXME
+
+        return ndbuffer_to_numpy(ndbuffer_image);
+    }
+
+    // To-Do: erosion, opening, closing
+};
 
 PYBIND11_MODULE(pylene, m)
 {
     m.doc() = "Python bindings for Pylene library";
 
-    // m.def("add", &add, "A function which adds two numbers");
-
-    // py::class_<mln::ndbuffer_image<float, 1>>(m, "Matrix", py::buffer_protocol())
-    //     // Construct from a buffer, python -> c++
-    //     .def(py::init([](py::buffer const b)
-    //     {
-    //         py::buffer_info info = b.request();
-    //         py::print("hello", info.format, info.ndim, info.shape);
-    //         // if (info.format != py::format_descriptor<float>::format() || info.ndim != 2)
-    //         //     throw std::runtime_error("Incompatible buffer format!");
-
-    //         // auto v = new Matrix(info.shape[0], info.shape[1]);
-    //         // memcpy(v->data(), info.ptr, sizeof(float) * (size_t) (v->rows() * v->cols()));
-    //         // return v;
-    //     }));
-
-    py::class_<Matrix>(m, "Matrix", py::buffer_protocol())
-        // Construct from a buffer, python -> c++
-        .def(py::init([](py::buffer const b)
-        {
-            py::buffer_info info = b.request();
-            if (info.format != py::format_descriptor<float>::format() || info.ndim != 2)
-                throw std::runtime_error("Incompatible buffer format!");
-
-            auto v = new Matrix(info.shape[0], info.shape[1]);
-            memcpy(v->data(), info.ptr, sizeof(float) * (size_t) (v->rows() * v->cols()));
-            return v;
-        }));
+    py::class_<morpho>(m, "morpho")
+        .def_static("dilation", &morpho::dilation);
 }
