@@ -24,8 +24,10 @@ pln.morpho.dilation(arr)
 
 ## To-Do
 
+- [ ] Clean code, error handling, refactor, add documentation
 - [ ] Compilation: make GTest work
-- [ ] Compilation: load pybind11 with conan
+- [ ] Create simple python test suite
+- [ ] Write report
 
 ## Resources
 

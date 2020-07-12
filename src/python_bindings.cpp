@@ -1,26 +1,18 @@
 #include <iostream>
 
-#include <mln/core/image/ndbuffer_image.hpp>
+#include "numpy_convert.hxx"
 
 #include <pybind11/pybind11.h>
 #include <pybind11/numpy.h>
 
 namespace py = pybind11;
 
-mln::ndbuffer_image numpy_to_ndbuffer(py::array_t<double>)
-{
-    return mln::ndbuffer_image();
-}
-
-py::array_t<double> ndbuffer_to_numpy(mln::ndbuffer_image)
-{
-    return py::array_t<double>();
-}
-
 class morpho
 {
 public:
-    static py::array_t<double> dilation(py::array_t<double> array)
+    static
+    py::array_t<double, py::array::c_style | py::array::forcecast>
+    dilation(py::array_t<double, py::array::c_style | py::array::forcecast> array)
     {
         auto ndbuffer_image = numpy_to_ndbuffer(array);
 
