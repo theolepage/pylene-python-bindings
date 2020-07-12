@@ -1,69 +1,18 @@
 #include <iostream>
 
-#include <mln/core/image/ndbuffer_image.hpp>
+#include "numpy_convert.hxx"
 
 #include <pybind11/pybind11.h>
 #include <pybind11/numpy.h>
 
 namespace py = pybind11;
 
-// - [ ] Check necessary copy
-// - [ ] C-style
-// - [ ] Pass strides to from_buffer
-// - [ ] Template
-
-mln::ndbuffer_image numpy_to_ndbuffer(py::array_t<double> array)
-{
-    py::buffer_info info = array.request();
-    if (info.format != py::format_descriptor<double>::format())
-        throw std::runtime_error("Invalid buffer type.");
-
-    int shape[info.ndim] = { 0 };
-    for (auto i = 0; i < info.ndim; i++)
-        shape[i] = info.shape[i];
-
-    // static_cast<std::byte*>(info.ptr)
-    // mln::sample_type_id::DOUBLE
-    // info.ndim
-    // shape
-    // nullptr
-    // false
-    return mln::ndbuffer_image::from_buffer(static_cast<std::byte*>(info.ptr),
-                                            mln::sample_type_id::DOUBLE,
-                                            info.ndim,
-                                            shape,
-                                            nullptr,
-                                            false);
-}
-
-py::array_t<double> ndbuffer_to_numpy(mln::ndbuffer_image buffer)
-{
-    int ndim = buffer.pdim();
-
-    std::vector<ssize_t> shape;
-    for (auto i = 0; i < ndim; i++)
-        shape.push_back(buffer.size(i));
-
-    std::vector<ssize_t> strides;
-    for (auto i = ndim - 1; i >= 0; i--)
-        strides.push_back(buffer.byte_stride(i));
-
-    auto info = py::buffer_info(
-        buffer.buffer(),
-        sizeof(double),
-        py::format_descriptor<double>::format(),
-        ndim,
-        shape,
-        strides
-    );
-
-    return py::array_t<double>(info);
-}
-
 class morpho
 {
 public:
-    static py::array_t<double> dilation(py::array_t<double> array)
+    static
+    py::array_t<double, py::array::c_style | py::array::forcecast>
+    dilation(py::array_t<double, py::array::c_style | py::array::forcecast> array)
     {
         auto ndbuffer_image = numpy_to_ndbuffer(array);
 
