@@ -24,14 +24,20 @@ pln.morpho.dilation(arr)
 
 ## To-Do
 
-- [ ] Bug: output not changed
-- [ ] Bug: determine good dimensions for convert
-- [ ] Template morpho by type
-- [ ] Se_t
-- [ ] Hard code image2d?
+Theo:
+- [ ] Bug: Handle 3d numpy => rgb8 does not compile
+- [ ] Handle image3d, 1d...
+- [ ] Refactor functions and types
+- [ ] Bug: Template signed int does not compile
 
-- [ ] Clean code, error handling, refactor, add documentation
+Nicolas:
+- [ ] Bug: Mask init list impossible
+
+Pierrick:
 - [ ] Create simple python test suite / make GTest work
+
+Team:
+- [ ] Clean code, error handling, refactor, add documentation
 - [ ] Write report
 
 ## Resources

@@ -11,6 +11,10 @@ mln::ndbuffer_image numpy_to_ndbuffer(py::array_t<T> array)
 
     int ndim = info.ndim;
 
+    // We assume that a 3D numpy array is a Pylene 2D image
+    if (ndim == 3)
+        ndim--;
+
     // Determine ndbuffer_image shape
     int shape[ndim] = { 0 };
     for (auto i = 0; i < ndim; i++)
@@ -18,10 +22,11 @@ mln::ndbuffer_image numpy_to_ndbuffer(py::array_t<T> array)
 
     return mln::ndbuffer_image::from_buffer(static_cast<std::byte*>(info.ptr),
                                             mln::sample_type_traits<T>::id(),
-                                            ndim - 1,
+                                            // mln::sample_type_id::RGB8,
+                                            ndim,
                                             shape,
                                             nullptr,
-                                            false);
+                                            true);
 }
 
 template <typename T>

@@ -9,10 +9,34 @@ class py_morpho
 {
 public:
     template <typename T>
-    static py::array_t<T> dilation(py::array_t<T, py_array_params> array, py_se)
+    static py::array_t<T> dilation(py::array_t<T, py_array_params> array, py_se se)
     {
         auto ndbuffer_image = numpy_to_ndbuffer<T>(array);
-        auto res = pln::dilation(ndbuffer_image, pln::my_disc(1));
+        auto res = pln::dilation<T>(ndbuffer_image, se.get_se().get());
+        return ndbuffer_to_numpy<T>(res);
+    }
+
+    template <typename T>
+    static py::array_t<T> erosion(py::array_t<T, py_array_params> array, py_se se)
+    {
+        auto ndbuffer_image = numpy_to_ndbuffer<T>(array);
+        auto res = pln::erosion<T>(ndbuffer_image, se.get_se().get());
+        return ndbuffer_to_numpy<T>(res);
+    }
+
+    template <typename T>
+    static py::array_t<T> opening(py::array_t<T, py_array_params> array, py_se se)
+    {
+        auto ndbuffer_image = numpy_to_ndbuffer<T>(array);
+        auto res = pln::opening<T>(ndbuffer_image, se.get_se().get());
+        return ndbuffer_to_numpy<T>(res);
+    }
+
+    template <typename T>
+    static py::array_t<T> closing(py::array_t<T, py_array_params> array, py_se se)
+    {
+        auto ndbuffer_image = numpy_to_ndbuffer<T>(array);
+        auto res = pln::closing<T>(ndbuffer_image, se.get_se().get());
         return ndbuffer_to_numpy<T>(res);
     }
 };

@@ -17,7 +17,7 @@ target_link_libraries(main PRIVATE Pylene::Pylene)
 
 # Main library
 set(SRC
-    include/pln/core/morpho.cpp
+    include/pln/core/morpho.hpp
     include/pln/core/se.cpp
     src/python_bindings.cpp
 )

@@ -1,69 +1,38 @@
 #pragma once
 
-class se_t
-{
-
-};
-
-class my_disc : public se_t
-{
-public:
-    my_disc(int radius)
-        : radius_(radius)
-    {}
-private:
-    int radius_;
-};
-
-class my_rect : public se_t
-{
-public:
-    my_rect(int width, int height)
-        : width_(width), height_(height)
-    {}
-private:
-    int width_;
-    int height_;
-};
-
-class my_mask : public se_t
-{
-public:
-    my_mask(std::initializer_list<std::initializer_list<int>> l)
-        : l_(l)
-    {}
-private:
-    std::initializer_list<std::initializer_list<int>> l_;
-};
+#include "../include/pln/core/se.hpp"
+#include "../include/pln/core/my_disc.hpp"
+#include "../include/pln/core/my_rectangle.hpp"
+#include "../include/pln/core/my_mask.hpp"
 
 class py_se
 {
 public:
-    py_se(se_t se)
+    py_se(std::shared_ptr<pln::se_t> se)
         : se_(se)
     {}
 
     static py_se create_disc(int radius)
     {
-        return py_se(my_disc(radius));
+        return py_se(std::make_shared<pln::my_disc>(pln::my_disc(radius)));
     }
 
     static py_se create_rect(int width, int height)
     {
-        return py_se(my_rect(width, height));
+        return py_se(std::make_shared<pln::my_rectangle>(pln::my_rectangle(width, height)));
     }
 
     static py_se create_mask(py::array_t<int, py_array_params>)
     {
         // FIXME: Converting py::array_t to initializer_list seems impossible.
-        return py_se(my_mask({}));
+        return py_se(std::make_shared<pln::my_mask>(pln::my_mask({})));
     }
 
-    se_t get_se() const
+    std::shared_ptr<pln::se_t> get_se()
     {
         return se_;
     }
 
 private:
-    se_t se_;
+    std::shared_ptr<pln::se_t> se_;
 };
