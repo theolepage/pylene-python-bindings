@@ -24,9 +24,14 @@ pln.morpho.dilation(arr)
 
 ## To-Do
 
+- [ ] Bug: output not changed
+- [ ] Bug: determine good dimensions for convert
+- [ ] Template morpho by type
+- [ ] Se_t
+- [ ] Hard code image2d?
+
 - [ ] Clean code, error handling, refactor, add documentation
-- [ ] Compilation: make GTest work
-- [ ] Create simple python test suite
+- [ ] Create simple python test suite / make GTest work
 - [ ] Write report
 
 ## Resources

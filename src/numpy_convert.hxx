@@ -18,7 +18,7 @@ mln::ndbuffer_image numpy_to_ndbuffer(py::array_t<T> array)
 
     return mln::ndbuffer_image::from_buffer(static_cast<std::byte*>(info.ptr),
                                             mln::sample_type_traits<T>::id(),
-                                            ndim,
+                                            ndim - 1,
                                             shape,
                                             nullptr,
                                             false);
