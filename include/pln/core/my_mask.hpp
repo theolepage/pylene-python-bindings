@@ -7,7 +7,7 @@ namespace pln {
     class my_mask : public se_t
     {
     public:
-        using mask_t = std::vector<std::vector<int>>;
+        using mask_t = std::initializer_list<std::initializer_list<int>>;
 
         explicit my_mask(mask_t&& m) : mask_(m)
         {}
