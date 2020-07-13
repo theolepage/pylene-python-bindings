@@ -14,10 +14,9 @@
 #include <iostream>
 
 namespace pln {
-    void dilation(mln::ndbuffer_image image, se_t&& se)
+    mln::ndbuffer_image dilation(mln::ndbuffer_image image, se_t&& se)
     {
-        mln::image2d<uint8_t> tmp = *(image.cast_to<uint8_t, 2>());
-        mln::morpho::dilation(tmp, mln::se::disc(5));
+        return mln::morpho::dilation(*(image.cast_to<uint8_t, 2>()), mln::se::disc(5));
     }
 
     void erosion(mln::ndbuffer_image image, se_t&& se)
