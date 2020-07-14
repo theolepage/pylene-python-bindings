@@ -25,10 +25,8 @@ pln.morpho.dilation(arr)
 ## To-Do
 
 Theo:
-- [ ] Bug: Handle 3d numpy => rgb8 does not compile
 - [ ] Handle image3d, 1d...
 - [ ] Refactor functions and types
-- [ ] Bug: Template signed int does not compile
 
 Nicolas:
 - [ ] Bug: Mask init list impossible

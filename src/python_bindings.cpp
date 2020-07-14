@@ -8,6 +8,29 @@ static const auto py_array_params = py::array::c_style | py::array::forcecast;
 #include "py_se.hxx"
 #include "py_morpho.hxx"
 
+template <typename T>
+void bind_type(auto& e)
+{
+   e.def_static("dilation", &py_morpho::dilation<T>);
+   e.def_static("erosion", &py_morpho::erosion<T>);
+   e.def_static("opening", &py_morpho::opening<T>);
+   e.def_static("closing", &py_morpho::closing<T>);
+}
+
+template <typename ...T>
+void bind_types(auto& e)
+{
+    // Initlist expansion trick
+    // For <int, float, double> for example will unpack to:
+    // {0, (bind_type<int>(e), 0), (bind_type<float>(e), 0), (bind_type<double>(e), 0)}
+    // Where (bind_type, 0) meaning bind_type is executed for its side effet and 0 is returned
+    // result will be : int _[] = {0, 0, 0, 0}
+    int _[] = {0, (bind_type<T>(e), 0)...};
+
+    // Avoid compiler warnings
+    (void)_;
+}
+
 PYBIND11_MODULE(pylene, m)
 {
     m.doc() = "Python bindings for Pylene library.";
@@ -20,54 +43,12 @@ PYBIND11_MODULE(pylene, m)
                     py::arg("width"),
                     py::arg("height"));
 
-    py::class_<py_morpho>(m, "morpho")
-        // Numpy types: https://numpy.org/devdocs/user/basics.types.html
-
-        // .def_static("dilation", &py_morpho::dilation<bool>)
-        // .def_static("dilation", &py_morpho::dilation<std::int8_t>)
-        // .def_static("dilation", &py_morpho::dilation<int16_t>)
-        // .def_static("dilation", &py_morpho::dilation<int32_t>)
-        // .def_static("dilation", &py_morpho::dilation<int64_t>)
-        .def_static("dilation", &py_morpho::dilation<uint8_t>)
-        // .def_static("dilation", &py_morpho::dilation<uint16_t>)
-        // .def_static("dilation", &py_morpho::dilation<uint32_t>)
-        // .def_static("dilation", &py_morpho::dilation<uint64_t>)
-        // .def_static("dilation", &py_morpho::dilation<float>)
-        // .def_static("dilation", &py_morpho::dilation<double>)
-
-        // .def_static("erosion", &py_morpho::erosion<bool>)
-        // .def_static("erosion", &py_morpho::erosion<std::int8_t>)
-        // .def_static("erosion", &py_morpho::erosion<int16_t>)
-        // .def_static("erosion", &py_morpho::erosion<int32_t>)
-        // .def_static("erosion", &py_morpho::erosion<int64_t>)
-        .def_static("erosion", &py_morpho::erosion<uint8_t>)
-        // .def_static("erosion", &py_morpho::erosion<uint16_t>)
-        // .def_static("erosion", &py_morpho::erosion<uint32_t>)
-        // .def_static("erosion", &py_morpho::erosion<uint64_t>)
-        // .def_static("erosion", &py_morpho::erosion<float>)
-        // .def_static("erosion", &py_morpho::erosion<double>)
-
-        // .def_static("opening", &py_morpho::opening<bool>)
-        // .def_static("opening", &py_morpho::opening<std::int8_t>)
-        // .def_static("opening", &py_morpho::opening<int16_t>)
-        // .def_static("opening", &py_morpho::opening<int32_t>)
-        // .def_static("opening", &py_morpho::opening<int64_t>)
-        .def_static("opening", &py_morpho::opening<uint8_t>)
-        // .def_static("opening", &py_morpho::opening<uint16_t>)
-        // .def_static("opening", &py_morpho::opening<uint32_t>)
-        // .def_static("opening", &py_morpho::opening<uint64_t>)
-        // .def_static("opening", &py_morpho::opening<float>)
-        // .def_static("opening", &py_morpho::opening<double>)
-
-        // .def_static("closing", &py_morpho::closing<bool>)
-        // .def_static("closing", &py_morpho::closing<std::int8_t>)
-        // .def_static("closing", &py_morpho::closing<int16_t>)
-        // .def_static("closing", &py_morpho::closing<int32_t>)
-        // .def_static("closing", &py_morpho::closing<int64_t>)
-        .def_static("closing", &py_morpho::closing<uint8_t>);
-        // .def_static("closing", &py_morpho::closing<uint16_t>)
-        // .def_static("closing", &py_morpho::closing<uint32_t>)
-        // .def_static("closing", &py_morpho::closing<uint64_t>)
-        // .def_static("closing", &py_morpho::closing<float>)
-        // .def_static("closing", &py_morpho::closing<double>);
+    auto binder = py::class_<py_morpho>(m, "morpho");
+    bind_types<bool,
+                uint8_t,
+                uint16_t,
+                uint32_t,
+                uint64_t,
+                float,
+                double>(binder);
 }
