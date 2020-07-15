@@ -9,7 +9,7 @@ static const auto py_array_params = py::array::c_style | py::array::forcecast;
 #include "py_morpho.hxx"
 
 template <typename T>
-void bind_type(auto& e)
+void bind_type(auto&& e)
 {
    e.def_static("dilation", &py_morpho::dilation<T>);
    e.def_static("erosion", &py_morpho::erosion<T>);
@@ -18,9 +18,9 @@ void bind_type(auto& e)
 }
 
 template <typename ...T>
-void bind_types(auto& e)
+void bind_types(auto&& e)
 {
-    // Initlist expansion trick
+    // list-initlizer expansion trick
     // For <int, float, double> for example will unpack to:
     // {0, (bind_type<int>(e), 0), (bind_type<float>(e), 0), (bind_type<double>(e), 0)}
     // Where (bind_type, 0) meaning bind_type is executed for its side effet and 0 is returned
@@ -43,12 +43,11 @@ PYBIND11_MODULE(pylene, m)
                     py::arg("width"),
                     py::arg("height"));
 
-    auto binder = py::class_<py_morpho>(m, "morpho");
     bind_types<bool,
                 uint8_t,
                 uint16_t,
                 uint32_t,
                 uint64_t,
                 float,
-                double>(binder);
+                double>(py::class_<py_morpho>(m, "morpho"));
 }
