@@ -1,5 +1,6 @@
 #include <pybind11/pybind11.h>
 #include <pybind11/numpy.h>
+#include <mln/core/colors.hpp>
 
 namespace py = pybind11;
 
@@ -49,5 +50,6 @@ PYBIND11_MODULE(pylene, m)
                 uint32_t,
                 uint64_t,
                 float,
-                double>(py::class_<py_morpho>(m, "morpho"));
+                double,
+                mln::rgb8>(py::class_<py_morpho>(m, "morpho"));
 }

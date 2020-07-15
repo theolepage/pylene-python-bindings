@@ -6,7 +6,7 @@
 #include <mln/morpho/erosion.hpp>
 #include <mln/core/image/ndimage.hpp>
 
-#include <mln/core/image/view/rgb.hpp>
+#include <mln/core/colors.hpp>
 
 #include <mln/core/se/private/se_facade.hpp>
 #include <mln/core/concepts/structuring_element.hpp>
