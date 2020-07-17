@@ -17,39 +17,39 @@
 
 #include "se.hpp"
 
-#define EDWIN(function) do {                                                \
-    if (image.sample_type() == mln::sample_type_id::RGB8)   \
-    {                                                                       \
-        auto* image_ = (image.cast_to<mln::rgb8, 2>());                     \
-        if (image_ == nullptr){                                              \
-            throw std::runtime_error("Not supported input image");}          \
-                                                                            \
+#define EDWIN(function) do {                                                    \
+    if (image.sample_type() == mln::sample_type_id::RGB8)                       \
+    {                                                                           \
+        auto* image_ = (image.cast_to<mln::rgb8, 2>());                         \
+        if (image_ == nullptr){                                                 \
+            throw std::runtime_error("Not supported input image");}             \
+                                                                                \
         if (const my_disc* const d = dynamic_cast<my_disc*>(se)){               \
-            return function(*image_, d->get_mln_instance());}              \
-                                                                            \
+            return function(*image_, d->get_mln_instance());}                   \
+                                                                                \
         else if (const my_mask* const m = dynamic_cast<my_mask*>(se)){          \
-            return function(*image_, m->get_mln_instance());}              \
-                                                                            \
-        else if (const my_rectangle* const r = dynamic_cast<my_rectangle*>(se)){     \
-            return function(*image_, r->get_mln_instance());}              \
-                                                                            \
-        throw std::runtime_error("Not supported se_t type");                \
-    }                                                                       \
-                                                                            \
-    auto* image_ = (image.cast_to<T, 2>());                                 \
-    if (image_ == nullptr){                                                  \
-        throw std::runtime_error("Not supported input image");}              \
-                                                                            \
+            return function(*image_, m->get_mln_instance());}                   \
+                                                                                \
+        else if (const my_rectangle* const r = dynamic_cast<my_rectangle*>(se)){\
+            return function(*image_, r->get_mln_instance());}                   \
+                                                                                \
+        throw std::runtime_error("Not supported se_t type");                    \
+    }                                                                           \
+                                                                                \
+    auto* image_ = (image.cast_to<T, 2>());                                     \
+    if (image_ == nullptr){                                                     \
+        throw std::runtime_error("Not supported input image");}                 \
+                                                                                \
     if (const my_disc* const d = dynamic_cast<my_disc*>(se)){                   \
-        return function(*image_, d->get_mln_instance());}                  \
-                                                                            \
+        return function(*image_, d->get_mln_instance());}                       \
+                                                                                \
     else if (const my_mask* const m = dynamic_cast<my_mask*>(se)){              \
-        return function(*image_, m->get_mln_instance());}                  \
-                                                                            \
-    else if (const my_rectangle* const r = dynamic_cast<my_rectangle*>(se)){       \
-        return function(*image_, r->get_mln_instance());}                \
-                                                                            \
-    throw std::runtime_error("Not supported se_t type");                    \
+        return function(*image_, m->get_mln_instance());}                       \
+                                                                                \
+    else if (const my_rectangle* const r = dynamic_cast<my_rectangle*>(se)){    \
+        return function(*image_, r->get_mln_instance());}                       \
+                                                                                \
+    throw std::runtime_error("Not supported se_t type");                        \
     } while (false)
 
 namespace pln {
