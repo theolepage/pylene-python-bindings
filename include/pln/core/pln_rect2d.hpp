@@ -13,16 +13,6 @@ namespace pln {
             , height_(height)
         {}
 
-        int get_width() const
-        {
-            return width_;
-        }
-
-        int get_height() const
-        {
-            return height_;
-        }
-
         mln::se::rect2d get_mln_instance() const
         {
             return mln::se::rect2d(width_, height_);

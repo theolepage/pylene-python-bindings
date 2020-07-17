@@ -24,7 +24,8 @@
             res = function(*image_, r->get_mln_instance());                    \
                                                                                \
         else                                                                   \
-            throw std::runtime_error("Not supported se_t type");               \
+            throw std::runtime_error("This structuring element is \
+                                      not supported.");                        \
     }                                                                          \
     while (false)
 
@@ -38,7 +39,8 @@ namespace pln {
         {
             auto* image_ = image.cast_to<mln::rgb8, 2>();
             if (image_ == nullptr)
-                throw std::runtime_error("Not supported input image");
+                throw std::runtime_error("The input image dimension is \
+                                          not supported.");
 
             DISPATCH_ACCORDING_TO_SE(mln::morpho::dilation);
             return res;
@@ -46,7 +48,8 @@ namespace pln {
 
         auto* image_ = image.cast_to<T, 2>();
         if (image_ == nullptr)
-            throw std::runtime_error("Not supported input image");
+            throw std::runtime_error("The input image dimension is \
+                                      not supported.");
 
         DISPATCH_ACCORDING_TO_SE(mln::morpho::dilation);
         return res;
@@ -61,7 +64,8 @@ namespace pln {
         {
             auto* image_ = image.cast_to<mln::rgb8, 2>();
             if (image_ == nullptr)
-                throw std::runtime_error("Not supported input image");
+                throw std::runtime_error("The input image dimension is \
+                                          not supported.");
 
             DISPATCH_ACCORDING_TO_SE(mln::morpho::erosion);
             return res;
@@ -69,7 +73,8 @@ namespace pln {
 
         auto* image_ = image.cast_to<T, 2>();
         if (image_ == nullptr)
-            throw std::runtime_error("Not supported input image");
+            throw std::runtime_error("The input image dimension is \
+                                      not supported.");
 
         DISPATCH_ACCORDING_TO_SE(mln::morpho::erosion);
         return res;
@@ -84,7 +89,8 @@ namespace pln {
         {
             auto* image_ = image.cast_to<mln::rgb8, 2>();
             if (image_ == nullptr)
-                throw std::runtime_error("Not supported input image");
+                throw std::runtime_error("The input image dimension is \
+                                          not supported.");
 
             DISPATCH_ACCORDING_TO_SE(mln::morpho::opening);
             return res;
@@ -92,7 +98,8 @@ namespace pln {
 
         auto* image_ = image.cast_to<T, 2>();
         if (image_ == nullptr)
-            throw std::runtime_error("Not supported input image");
+            throw std::runtime_error("The input image dimension is \
+                                      not supported.");
 
         DISPATCH_ACCORDING_TO_SE(mln::morpho::opening);
         return res;
@@ -107,7 +114,8 @@ namespace pln {
         {
             auto* image_ = image.cast_to<mln::rgb8, 2>();
             if (image_ == nullptr)
-                throw std::runtime_error("Not supported input image");
+                throw std::runtime_error("The input image dimension is \
+                                          not supported.");
 
             DISPATCH_ACCORDING_TO_SE(mln::morpho::closing);
             return res;
@@ -115,7 +123,8 @@ namespace pln {
 
         auto* image_ = image.cast_to<T, 2>();
         if (image_ == nullptr)
-            throw std::runtime_error("Not supported input image");
+            throw std::runtime_error("The input image dimension is \
+                                      not supported.");
 
         DISPATCH_ACCORDING_TO_SE(mln::morpho::closing);
         return res;

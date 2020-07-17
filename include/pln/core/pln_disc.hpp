@@ -11,11 +11,6 @@ namespace pln {
         explicit pln_disc(int rad) : radius_(rad)
         {}
 
-        int get_radius() const
-        {
-            return radius_;
-        }
-
         mln::se::disc get_mln_instance() const
         {
             return mln::se::disc(radius_);

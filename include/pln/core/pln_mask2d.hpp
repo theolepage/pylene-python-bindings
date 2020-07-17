@@ -13,11 +13,6 @@ namespace pln {
         explicit pln_mask2d(mask_t& m) : mask_(m)
         {}
 
-        const mask_t& get_mask() const
-        {
-            return mask_;
-        }
-
         mln::se::mask2d get_mln_instance() const
         {
             return mln::se::mask2d(mask_);
