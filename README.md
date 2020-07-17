@@ -7,7 +7,7 @@ Python bindings for Pylene, a C++ image processing library.
 Start a Python3 interpreter in the folder of the generated `pylene.cpython-38-x86_64-linux-gnu.so`.
 
 ```python
-from skimagedata import data
+from skimage import data
 import pylene as pln
 
 input1 = data.camera() # grayscale 8-bit image
