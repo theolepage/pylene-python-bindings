@@ -11,8 +11,8 @@ public:
     template <typename T>
     static py::array_t<T> dilation(py::array_t<T, py_array_params> array, py_se se)
     {
-        auto ndbuffer_image = numpy_to_ndbuffer<T>(array);
-        auto res = pln::dilation<T>(ndbuffer_image, se.get_se().get());
+        auto image = numpy_to_ndbuffer<T>(array);
+        auto res = pln::dilation<T>(image, se.get_se().get());
         return ndbuffer_to_numpy<T>(res);
     }
 

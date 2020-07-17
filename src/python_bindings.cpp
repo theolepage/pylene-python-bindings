@@ -50,6 +50,5 @@ PYBIND11_MODULE(pylene, m)
                 uint32_t,
                 uint64_t,
                 float,
-                double,
-                mln::rgb8>(py::class_<py_morpho>(m, "morpho"));
+                double>(py::class_<py_morpho>(m, "morpho"));
 }

@@ -17,118 +17,113 @@
 
 #include "se.hpp"
 
-namespace pln {
-    // template <class SE>
-    // mln::details::StructuringElement<SE> test(se_t* se)
-    // {
-    //     if (const my_disc* const d = dynamic_cast<my_disc*>(se))
-    //     {
-    //         return mln::se::disc(d->get_radius());
-    //     }
-    //     else if (const my_mask* const m = dynamic_cast<my_mask*>(se))
-    //     {
-    //         return mln::se::mask2d(m->get_mask());
-    //     }
-    //     else if (const my_rectangle* const r = dynamic_cast<my_rectangle*>(se))
-    //     {
-    //         return mln::se::rect2d(r->get_width(), r->get_height());
-    //     }
-    //     throw std::runtime_error("Not supported se_t type");
-    // }
+#define DISPATCH_ACCORDING_TO_SE(function)                                     \
+    do                                                                         \
+    {                                                                          \
+        if (const my_disc* const d = dynamic_cast<my_disc*>(se))               \
+            res = function(*image_, d->get_mln_instance());                    \
+                                                                               \
+        else if (const my_mask* const m = dynamic_cast<my_mask*>(se))          \
+            res = function(*image_, m->get_mln_instance());                    \
+                                                                               \
+        else if (const my_rectangle* const r = dynamic_cast<my_rectangle*>(se))\
+            res = function(*image_, r->get_mln_instance());                    \
+                                                                               \
+        else                                                                   \
+            throw std::runtime_error("Not supported se_t type");               \
+    }                                                                          \
+    while (false)
 
+namespace pln {
     template <typename T>
     mln::ndbuffer_image dilation(mln::ndbuffer_image image, se_t* se)
     {
-        auto* image_ = (image.cast_to<T, 2>());
+        mln::ndbuffer_image res;
 
-        if (const my_disc* const d = dynamic_cast<my_disc*>(se))
+        if (image.sample_type() == mln::sample_type_id::RGB8)
         {
-            return mln::morpho::dilation(*image_,
-                                         mln::se::disc(d->get_radius()));
+            auto* image_ = (image.cast_to<mln::rgb8, 2>());
+            if (image_ == nullptr)
+                throw std::runtime_error("Not supported input image");
+
+            DISPATCH_ACCORDING_TO_SE(mln::morpho::dilation);
+            return res;
         }
-        else if (const my_mask* const m = dynamic_cast<my_mask*>(se))
-        {
-            return mln::morpho::dilation(*image_,
-                                         mln::se::mask2d(m->get_mask()));
-        }
-        else if (const my_rectangle* const r = dynamic_cast<my_rectangle*>(se))
-        {
-            return mln::morpho::dilation(*image_,
-                                         mln::se::rect2d(r->get_width(),
-                                                         r->get_height()));
-        }
-        throw std::runtime_error("Not supported se_t type");
+
+        auto* image_ = (image.cast_to<T, 2>());
+        if (image_ == nullptr)
+            throw std::runtime_error("Not supported input image");
+
+        DISPATCH_ACCORDING_TO_SE(mln::morpho::dilation);
+        return res;
     }
 
     template <typename T>
     mln::ndbuffer_image erosion(mln::ndbuffer_image image, se_t* se)
     {
-        auto* image_ = (image.cast_to<T, 2>());
+        mln::ndbuffer_image res;
 
-        if (const my_disc* const d = dynamic_cast<my_disc*>(se))
+        if (image.sample_type() == mln::sample_type_id::RGB8)
         {
-            return mln::morpho::erosion(*image_,
-                                         mln::se::disc(d->get_radius()));
+            auto* image_ = (image.cast_to<mln::rgb8, 2>());
+            if (image_ == nullptr)
+                throw std::runtime_error("Not supported input image");
+
+            DISPATCH_ACCORDING_TO_SE(mln::morpho::erosion);
+            return res;
         }
-        else if (const my_mask* const m = dynamic_cast<my_mask*>(se))
-        {
-            return mln::morpho::erosion(*image_,
-                                         mln::se::mask2d(m->get_mask()));
-        }
-        else if (const my_rectangle* const r = dynamic_cast<my_rectangle*>(se))
-        {
-            return mln::morpho::erosion(*image_,
-                                         mln::se::rect2d(r->get_width(),
-                                                         r->get_height()));
-        }
-        throw std::runtime_error("Not supported se_t type");
+
+        auto* image_ = (image.cast_to<T, 2>());
+        if (image_ == nullptr)
+            throw std::runtime_error("Not supported input image");
+
+        DISPATCH_ACCORDING_TO_SE(mln::morpho::erosion);
+        return res;
     }
 
     template <typename T>
     mln::ndbuffer_image opening(mln::ndbuffer_image image, se_t* se)
     {
-        auto* image_ = (image.cast_to<T, 2>());
+        mln::ndbuffer_image res;
 
-        if (const my_disc* const d = dynamic_cast<my_disc*>(se))
+        if (image.sample_type() == mln::sample_type_id::RGB8)
         {
-            return mln::morpho::opening(*image_,
-                                         mln::se::disc(d->get_radius()));
+            auto* image_ = (image.cast_to<mln::rgb8, 2>());
+            if (image_ == nullptr)
+                throw std::runtime_error("Not supported input image");
+
+            DISPATCH_ACCORDING_TO_SE(mln::morpho::opening);
+            return res;
         }
-        else if (const my_mask* const m = dynamic_cast<my_mask*>(se))
-        {
-            return mln::morpho::opening(*image_,
-                                         mln::se::mask2d(m->get_mask()));
-        }
-        else if (const my_rectangle* const r = dynamic_cast<my_rectangle*>(se))
-        {
-            return mln::morpho::opening(*image_,
-                                         mln::se::rect2d(r->get_width(),
-                                                         r->get_height()));
-        }
-        throw std::runtime_error("Not supported se_t type");
+
+        auto* image_ = (image.cast_to<T, 2>());
+        if (image_ == nullptr)
+            throw std::runtime_error("Not supported input image");
+
+        DISPATCH_ACCORDING_TO_SE(mln::morpho::opening);
+        return res;
     }
 
     template <typename T>
     mln::ndbuffer_image closing(mln::ndbuffer_image image, se_t* se)
     {
-        auto* image_ = (image.cast_to<T, 2>());
+        mln::ndbuffer_image res;
 
-        if (const my_disc* const d = dynamic_cast<my_disc*>(se))
+        if (image.sample_type() == mln::sample_type_id::RGB8)
         {
-            return mln::morpho::closing(*image_,
-                                         mln::se::disc(d->get_radius()));
+            auto* image_ = (image.cast_to<mln::rgb8, 2>());
+            if (image_ == nullptr)
+                throw std::runtime_error("Not supported input image");
+
+            DISPATCH_ACCORDING_TO_SE(mln::morpho::closing);
+            return res;
         }
-        else if (const my_mask* const m = dynamic_cast<my_mask*>(se))
-        {
-            return mln::morpho::closing(*image_,
-                                         mln::se::mask2d(m->get_mask()));
-        }
-        else if (const my_rectangle* const r = dynamic_cast<my_rectangle*>(se))
-        {
-            return mln::morpho::closing(*image_,
-                                         mln::se::rect2d(r->get_width(),
-                                                         r->get_height()));
-        }
-        throw std::runtime_error("Not supported se_t type");
+
+        auto* image_ = (image.cast_to<T, 2>());
+        if (image_ == nullptr)
+            throw std::runtime_error("Not supported input image");
+
+        DISPATCH_ACCORDING_TO_SE(mln::morpho::closing);
+        return res;
     }
 }

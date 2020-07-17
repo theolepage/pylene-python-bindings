@@ -25,10 +25,11 @@ pln.morpho.dilation(arr)
 ## To-Do
 
 Theo:
+- [ ] Test with RGB
 - [ ] Handle image3d, 1d...
-- [ ] Refactor functions and types
 
 Nicolas:
+- [ ] Refactor functions and types
 - [ ] Bug: Mask init list impossible
 
 Pierrick:
