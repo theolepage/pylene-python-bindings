@@ -12,13 +12,8 @@ set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -W -Wall")
 include_directories("src")
 
-add_executable(main src/main.cpp)
-target_link_libraries(main PRIVATE Pylene::Pylene)
-
 # Main library
 set(SRC
-    include/pln/core/morpho.hpp
-    include/pln/core/se.cpp
     src/python_bindings.cpp
 )
 pybind11_add_module(pylene SHARED ${SRC})

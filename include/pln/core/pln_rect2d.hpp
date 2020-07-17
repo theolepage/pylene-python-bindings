@@ -5,10 +5,10 @@
 #include "se.hpp"
 
 namespace pln {
-    class my_rectangle : public se_t
+    class pln_rect2d : public se_t
     {
     public:
-        explicit my_rectangle(int width, int height)
+        explicit pln_rect2d(int width, int height)
             : width_(width)
             , height_(height)
         {}
@@ -32,6 +32,7 @@ namespace pln {
         int width_;
         int height_;
 
-        void polymorphic() const noexcept override {}
+        void polymorphic() const noexcept override
+        {}
     };
 }

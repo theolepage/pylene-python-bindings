@@ -3,12 +3,9 @@
 namespace pln {
     class se_t
     {
-    public:
-        auto get_structuring_element() const;
-
     private:
+        // Used to allow the dynamic cast
         virtual void polymorphic() const noexcept
         {}
-        // Used to allow the dynamic cast
     };
 }

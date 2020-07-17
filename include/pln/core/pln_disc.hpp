@@ -5,10 +5,10 @@
 #include "se.hpp"
 
 namespace pln {
-    class my_disc : public se_t
+    class pln_disc : public se_t
     {
     public:
-        explicit my_disc(int rad) : radius_(rad)
+        explicit pln_disc(int rad) : radius_(rad)
         {}
 
         int get_radius() const

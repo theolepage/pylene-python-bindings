@@ -1,9 +1,9 @@
 #pragma once
 
 #include "../include/pln/core/se.hpp"
-#include "../include/pln/core/my_disc.hpp"
-#include "../include/pln/core/my_rectangle.hpp"
-#include "../include/pln/core/my_mask.hpp"
+#include "../include/pln/core/pln_disc.hpp"
+#include "../include/pln/core/pln_rect2d.hpp"
+#include "../include/pln/core/pln_mask2d.hpp"
 
 class py_se
 {
@@ -14,18 +14,19 @@ public:
 
     static py_se create_disc(int radius)
     {
-        return py_se(std::make_shared<pln::my_disc>(pln::my_disc(radius)));
+        return py_se(std::make_shared<pln::pln_disc>(radius));
     }
 
     static py_se create_rect(int width, int height)
     {
-        return py_se(std::make_shared<pln::my_rectangle>(pln::my_rectangle(width, height)));
+        return py_se(std::make_shared<pln::pln_rect2d>(width, height));
     }
 
-    static py_se create_mask(py::array_t<int, py_array_params>)
+    static py_se create_mask(py::array_t<int, pyarr_params>)
     {
         // FIXME: Converting py::array_t to initializer_list seems impossible.
-        return py_se(std::make_shared<pln::my_mask>(pln::my_mask({})));
+        std::initializer_list<std::initializer_list<int>> l = { { 0 } };
+        return py_se(std::make_shared<pln::pln_mask2d>(l));
     }
 
     std::shared_ptr<pln::se_t> get_se()

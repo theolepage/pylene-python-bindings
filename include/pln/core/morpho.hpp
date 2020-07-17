@@ -1,32 +1,26 @@
 #pragma once
 
+#include <mln/core/image/ndimage.hpp>
+#include <mln/core/colors.hpp>
 #include <mln/morpho/dilation.hpp>
 #include <mln/morpho/closing.hpp>
 #include <mln/morpho/opening.hpp>
 #include <mln/morpho/erosion.hpp>
-#include <mln/core/image/ndimage.hpp>
 
-#include <mln/core/colors.hpp>
-
-#include <mln/core/se/private/se_facade.hpp>
-#include <mln/core/concepts/structuring_element.hpp>
-
-#include <mln/core/se/disc.hpp>
-#include <mln/core/se/mask2d.hpp>
-#include <mln/core/se/rect2d.hpp>
-
-#include "se.hpp"
+#include "pln_disc.hpp"
+#include "pln_rect2d.hpp"
+#include "pln_mask2d.hpp"
 
 #define DISPATCH_ACCORDING_TO_SE(function)                                     \
     do                                                                         \
     {                                                                          \
-        if (const my_disc* const d = dynamic_cast<my_disc*>(se))               \
+        if (const pln_disc* const d = dynamic_cast<pln_disc*>(se))             \
             res = function(*image_, d->get_mln_instance());                    \
                                                                                \
-        else if (const my_mask* const m = dynamic_cast<my_mask*>(se))          \
+        else if (const pln_mask2d* const m = dynamic_cast<pln_mask2d*>(se))    \
             res = function(*image_, m->get_mln_instance());                    \
                                                                                \
-        else if (const my_rectangle* const r = dynamic_cast<my_rectangle*>(se))\
+        else if (const pln_rect2d* const r = dynamic_cast<pln_rect2d*>(se))    \
             res = function(*image_, r->get_mln_instance());                    \
                                                                                \
         else                                                                   \
@@ -42,7 +36,7 @@ namespace pln {
 
         if (image.sample_type() == mln::sample_type_id::RGB8)
         {
-            auto* image_ = (image.cast_to<mln::rgb8, 2>());
+            auto* image_ = image.cast_to<mln::rgb8, 2>();
             if (image_ == nullptr)
                 throw std::runtime_error("Not supported input image");
 
@@ -50,7 +44,7 @@ namespace pln {
             return res;
         }
 
-        auto* image_ = (image.cast_to<T, 2>());
+        auto* image_ = image.cast_to<T, 2>();
         if (image_ == nullptr)
             throw std::runtime_error("Not supported input image");
 
@@ -65,7 +59,7 @@ namespace pln {
 
         if (image.sample_type() == mln::sample_type_id::RGB8)
         {
-            auto* image_ = (image.cast_to<mln::rgb8, 2>());
+            auto* image_ = image.cast_to<mln::rgb8, 2>();
             if (image_ == nullptr)
                 throw std::runtime_error("Not supported input image");
 
@@ -73,7 +67,7 @@ namespace pln {
             return res;
         }
 
-        auto* image_ = (image.cast_to<T, 2>());
+        auto* image_ = image.cast_to<T, 2>();
         if (image_ == nullptr)
             throw std::runtime_error("Not supported input image");
 
@@ -88,7 +82,7 @@ namespace pln {
 
         if (image.sample_type() == mln::sample_type_id::RGB8)
         {
-            auto* image_ = (image.cast_to<mln::rgb8, 2>());
+            auto* image_ = image.cast_to<mln::rgb8, 2>();
             if (image_ == nullptr)
                 throw std::runtime_error("Not supported input image");
 
@@ -96,7 +90,7 @@ namespace pln {
             return res;
         }
 
-        auto* image_ = (image.cast_to<T, 2>());
+        auto* image_ = image.cast_to<T, 2>();
         if (image_ == nullptr)
             throw std::runtime_error("Not supported input image");
 
@@ -111,7 +105,7 @@ namespace pln {
 
         if (image.sample_type() == mln::sample_type_id::RGB8)
         {
-            auto* image_ = (image.cast_to<mln::rgb8, 2>());
+            auto* image_ = image.cast_to<mln::rgb8, 2>();
             if (image_ == nullptr)
                 throw std::runtime_error("Not supported input image");
 
@@ -119,7 +113,7 @@ namespace pln {
             return res;
         }
 
-        auto* image_ = (image.cast_to<T, 2>());
+        auto* image_ = image.cast_to<T, 2>();
         if (image_ == nullptr)
             throw std::runtime_error("Not supported input image");
 

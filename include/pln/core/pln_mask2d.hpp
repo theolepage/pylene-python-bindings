@@ -5,12 +5,12 @@
 #include "se.hpp"
 
 namespace pln {
-    class my_mask : public se_t
+    class pln_mask2d : public se_t
     {
     public:
         using mask_t = std::initializer_list<std::initializer_list<int>>;
 
-        explicit my_mask(mask_t&& m) : mask_(m)
+        explicit pln_mask2d(mask_t& m) : mask_(m)
         {}
 
         const mask_t& get_mask() const

@@ -1,18 +1,20 @@
 # CPPA
 
-Polymorphisme statique/dynamique pour Python.
+Python bindings for Pylene, a C++ image processing library.
 
 ## Usage
 
 Start a Python3 interpreter in the folder of the generated `pylene.cpython-38-x86_64-linux-gnu.so`.
 
 ```python
-import numpy as np
+from skimagedata import data
 import pylene as pln
 
-arr = np.array([[1, 0], [0, 1]])
+input1 = data.camera() # grayscale 8-bit image
+input2 = data.retina() # rgb-8 image
 
-pln.morpho.dilation(arr)
+out1 = pln.morpho.dilation(input1, pln.se.disc(4))
+out2 = pln.morpho.dilation(input2, pln.se.rectangle(width=11, height=5))
 ```
 
 ## Build
@@ -24,18 +26,7 @@ pln.morpho.dilation(arr)
 
 ## To-Do
 
-Theo:
-- [ ] Test with RGB
-- [ ] Handle image3d, 1d...
-
-Nicolas:
-- [ ] Refactor functions and types
-- [ ] Bug: Mask init list impossible
-
-Pierrick:
-- [ ] Create simple python test suite / make GTest work
-
-Team:
+- [ ] Create simple python test suite
 - [ ] Clean code, error handling, refactor, add documentation
 - [ ] Write report
 
