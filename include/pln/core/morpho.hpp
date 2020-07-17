@@ -17,61 +17,63 @@
 
 #include "se.hpp"
 
-#define EDWIN(function) if (image.sample_type() == mln::sample_type_id::RGB8)   \
+#define EDWIN(function) do {                                                \
+    if (image.sample_type() == mln::sample_type_id::RGB8)   \
     {                                                                       \
         auto* image_ = (image.cast_to<mln::rgb8, 2>());                     \
-        if (image_ == nullptr)                                              \
-            throw std::runtime_error("Not supported input image");          \
+        if (image_ == nullptr){                                              \
+            throw std::runtime_error("Not supported input image");}          \
                                                                             \
-        if (const disc* const d = dynamic_cast<my_disc*>(se))               \
-            return function(*image_, disc.get_mln_instance());              \
+        if (const my_disc* const d = dynamic_cast<my_disc*>(se)){               \
+            return function(*image_, d->get_mln_instance());}              \
                                                                             \
-        else if (const mask* const m = dynamic_cast<my_mask*>(se))          \
-            return function(*image_, mask.get_mln_instance());              \
+        else if (const my_mask* const m = dynamic_cast<my_mask*>(se)){          \
+            return function(*image_, m->get_mln_instance());}              \
                                                                             \
-        else if (const rect* const r = dynamic_cast<my_rectangle*>(se))     \
-            return function(*image_, rect.get_mln_instance());              \
+        else if (const my_rectangle* const r = dynamic_cast<my_rectangle*>(se)){     \
+            return function(*image_, r->get_mln_instance());}              \
                                                                             \
         throw std::runtime_error("Not supported se_t type");                \
     }                                                                       \
                                                                             \
     auto* image_ = (image.cast_to<T, 2>());                                 \
-    if (image_ == nullptr)                                                  \
-        throw std::runtime_error("Not supported input image");              \
+    if (image_ == nullptr){                                                  \
+        throw std::runtime_error("Not supported input image");}              \
                                                                             \
-    if (const disc* const d = dynamic_cast<my_disc*>(se))                   \
-        return function(*image_, disc.get_mln_instance());                  \
+    if (const my_disc* const d = dynamic_cast<my_disc*>(se)){                   \
+        return function(*image_, d->get_mln_instance());}                  \
                                                                             \
-    else if (const mask* const m = dynamic_cast<my_mask*>(se))              \
-        return function(*image_, mask.get_mln_instance());                  \
+    else if (const my_mask* const m = dynamic_cast<my_mask*>(se)){              \
+        return function(*image_, m->get_mln_instance());}                  \
                                                                             \
-    else if (const rect2d* const r = dynamic_cast<my_rectangle*>(se))       \
-        return function(*image_, rect2d.get_mln_instance());                \
+    else if (const my_rectangle* const r = dynamic_cast<my_rectangle*>(se)){       \
+        return function(*image_, r->get_mln_instance());}                \
                                                                             \
-    throw std::runtime_error("Not supported se_t type");
+    throw std::runtime_error("Not supported se_t type");                    \
+    } while (false)
 
 namespace pln {
     template <typename T>
     mln::ndbuffer_image dilation(mln::ndbuffer_image image, se_t* se)
     {
-        EDWIN(mln::morpho::dilation)
+        EDWIN(mln::morpho::dilation);
     }
 
     template <typename T>
     mln::ndbuffer_image erosion(mln::ndbuffer_image image, se_t* se)
     {
-        EDWIN(mln::morpho::erosion)
+        EDWIN(mln::morpho::erosion);
     }
 
     template <typename T>
     mln::ndbuffer_image opening(mln::ndbuffer_image image, se_t* se)
     {
-        EDWIN(mln::morpho::opening)
+        EDWIN(mln::morpho::opening);
     }
 
     template <typename T>
     mln::ndbuffer_image closing(mln::ndbuffer_image image, se_t* se)
     {
-        EDWIN(mln::morpho::closing)
+        EDWIN(mln::morpho::closing);
     }
 }
