@@ -1,8 +1,9 @@
 #pragma once
 
+#include <mln/core/se/mask2d.hpp>
+
 #include "se.hpp"
 
-#include <vector>
 namespace pln {
     class my_mask : public se_t
     {
@@ -15,6 +16,11 @@ namespace pln {
         const mask_t& get_mask() const
         {
             return mask_;
+        }
+
+        mln::se::mask2d get_mln_instance() const
+        {
+            return mln::se::mask2d(mask_);
         }
 
     private:
