@@ -36,24 +36,32 @@ template <typename T>
 py::array_t<T> ndbuffer_to_numpy(mln::ndbuffer_image buffer)
 {
     int ndim = buffer.pdim();
+    int new_ndim = ndim;
+
+    if (buffer.sample_type() == mln::sample_type_id::RGB8)
+        new_ndim++;
 
     // Determine numpy array shape
-    std::vector<ssize_t> shape(ndim + 1);
+    std::vector<ssize_t> shape(new_ndim);
     for (auto i = 0; i < ndim; i++)
         shape[i] = buffer.size(i);
-    shape[ndim] = 3;
 
     // Determine numpy array strides (reverse order)
-    std::vector<ssize_t> strides(ndim + 1);
+    std::vector<ssize_t> strides(new_ndim);
     for (auto i = 0; i < ndim; i++)
         strides[i] = buffer.byte_stride(ndim - 1 - i);
-    strides[ndim] = sizeof(T);
+
+    if (buffer.sample_type() == mln::sample_type_id::RGB8)
+    {
+        shape[ndim] = 3;
+        strides[ndim] = sizeof(T);
+    }
 
     auto info = py::buffer_info(
         buffer.buffer(),
         sizeof(T),
         py::format_descriptor<T>::format(),
-        ndim + 1,
+        new_ndim,
         shape,
         strides
     );
