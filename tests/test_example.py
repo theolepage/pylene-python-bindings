@@ -1,30 +1,35 @@
 import numpy as np
 import pylene as pln
 import unittest
+import matplotlib.pyplot as plt
+from skimage import data
 
-def test_convert(arr):
-    res = pln.morpho.dilation(arr, pln.se.disc(4))
-    print(np.array_equal(res, arr), arr.dtype, res.dtype)
+def mse(imgA, imgB):
+	err = np.sum((imgA.astype("float") - imgB.astype("float")) ** 2)
+	err /= float(imgA.shape[0] * imgA.shape[1])
+	return err
 
-#test_convert(np.array([[17, 8], [9, 1]]))
-#test_convert(np.array([[17, 8], [9, 1]]).astype(np.uint8))
-#test_convert(np.arange(10*10*10*10).reshape((10, 10, 10, 10)).astype(np.double))
+class TestDilation(unittest.TestCase):
 
-class TestStringMethods(unittest.TestCase):
+    lena = plt.imread('lena.png') * 255
+    A_dilation_disc5 = plt.imread('lena_dilation_disc5.png') * 255
+    A_dilation_rect20 = plt.imread('lena_dilation_rect20-20.png') * 255
 
-    def test_upper(self):
-        self.assertEqual('foo'.upper(), 'FOO')
+    B_dilation_disc5 = pln.morpho.dilation(lena, pln.se.disc(5))
+    B_dilation_rect20 = pln.morpho.dilation(lena, pln.se.rectangle(width=20, height=20))
 
-    def test_isupper(self):
-        self.assertTrue('FOO'.isupper())
-        self.assertFalse('Foo'.isupper())
+    def test_shape(self):
+        self.assertEqual(lena.shape, A_dilation_disc5.shape)
+        self.assertEqual(A_dilation_disc5.shape, B_dilation_disc5.shape)
+        self.assertEqual(A_dilation_rect20.shape, B_dilation_rect20.shape)
 
-    def test_split(self):
-        s = 'hello world'
-        self.assertEqual(s.split(), ['hello', 'world'])
-        # check that s.split fails when the separator is not a string
-        with self.assertRaises(TypeError):
-            s.split(2)
+    def test_dtype(self):
+        self.assertEqual(lena.dtype, np.uint8)
+
+    def test_MSE(self):
+        self.assertLessEqual(mse(A_dilation_disc5, B_dilation_disc5), 0)
+        self.assertLessEqual(mse(A_dilation_rect20, B_dilation_rect20), 0)
+
 
 if __name__ == '__main__':
     unittest.main()
