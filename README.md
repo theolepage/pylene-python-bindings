@@ -25,6 +25,7 @@ out2 = pln.morpho.dilation(input2, pln.se.rectangle(width=11, height=5))
 4.  `cmake ..; make`
 
 Alternatively, you can run our test suite by typing `make test` in the build directory.
+It is noteworthy that toggling the `ALWAYS_SHOW_IMAGES` in `tests/test_example.py` will show a comparison between output and expected images for each test.
 
 ## Authors
 

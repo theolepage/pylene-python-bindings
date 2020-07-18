@@ -44,12 +44,17 @@
             res = function(*image_, r->get_mln_instance());                    \
                                                                                \
         else                                                                   \
-            throw std::runtime_error("This structuring element is \
-                                      not supported.");                        \
+            throw std::runtime_error(ERROR_SE_MSG);                            \
     }                                                                          \
     while (false)
 
 namespace pln {
+    static constexpr auto MAX_NDIM = 2;
+    static constexpr auto ERROR_DIM_MSG = "The input image dimension is \
+                                           not supported.";
+    static constexpr auto ERROR_SE_MSG = "The structuring element is \
+                                          not supported.";
+
     /** Apply a morphological dilation on a mln::ndbuffer_image.
      *
      * @tparam T The type of the mln::ndbuffer_image values.
@@ -68,19 +73,17 @@ namespace pln {
 
         if (image.sample_type() == mln::sample_type_id::RGB8)
         {
-            auto* image_ = image.cast_to<mln::rgb8, 2>();
+            auto* image_ = image.cast_to<mln::rgb8, MAX_NDIM>();
             if (image_ == nullptr)
-                throw std::runtime_error("The input image dimension is \
-                                          not supported.");
+                throw std::runtime_error(ERROR_DIM_MSG);
 
             DISPATCH_ACCORDING_TO_SE(mln::morpho::dilation);
             return res;
         }
 
-        auto* image_ = image.cast_to<T, 2>();
+        auto* image_ = image.cast_to<T, MAX_NDIM>();
         if (image_ == nullptr)
-            throw std::runtime_error("The input image dimension is \
-                                      not supported.");
+            throw std::runtime_error(ERROR_DIM_MSG);
 
         DISPATCH_ACCORDING_TO_SE(mln::morpho::dilation);
         return res;
@@ -104,19 +107,17 @@ namespace pln {
 
         if (image.sample_type() == mln::sample_type_id::RGB8)
         {
-            auto* image_ = image.cast_to<mln::rgb8, 2>();
+            auto* image_ = image.cast_to<mln::rgb8, MAX_NDIM>();
             if (image_ == nullptr)
-                throw std::runtime_error("The input image dimension is \
-                                          not supported.");
+                throw std::runtime_error(ERROR_DIM_MSG);
 
             DISPATCH_ACCORDING_TO_SE(mln::morpho::erosion);
             return res;
         }
 
-        auto* image_ = image.cast_to<T, 2>();
+        auto* image_ = image.cast_to<T, MAX_NDIM>();
         if (image_ == nullptr)
-            throw std::runtime_error("The input image dimension is \
-                                      not supported.");
+            throw std::runtime_error(ERROR_DIM_MSG);
 
         DISPATCH_ACCORDING_TO_SE(mln::morpho::erosion);
         return res;
@@ -140,19 +141,17 @@ namespace pln {
 
         if (image.sample_type() == mln::sample_type_id::RGB8)
         {
-            auto* image_ = image.cast_to<mln::rgb8, 2>();
+            auto* image_ = image.cast_to<mln::rgb8, MAX_NDIM>();
             if (image_ == nullptr)
-                throw std::runtime_error("The input image dimension is \
-                                          not supported.");
+                throw std::runtime_error(ERROR_DIM_MSG);
 
             DISPATCH_ACCORDING_TO_SE(mln::morpho::opening);
             return res;
         }
 
-        auto* image_ = image.cast_to<T, 2>();
+        auto* image_ = image.cast_to<T, MAX_NDIM>();
         if (image_ == nullptr)
-            throw std::runtime_error("The input image dimension is \
-                                      not supported.");
+            throw std::runtime_error(ERROR_DIM_MSG);
 
         DISPATCH_ACCORDING_TO_SE(mln::morpho::opening);
         return res;
@@ -176,19 +175,17 @@ namespace pln {
 
         if (image.sample_type() == mln::sample_type_id::RGB8)
         {
-            auto* image_ = image.cast_to<mln::rgb8, 2>();
+            auto* image_ = image.cast_to<mln::rgb8, MAX_NDIM>();
             if (image_ == nullptr)
-                throw std::runtime_error("The input image dimension is \
-                                          not supported.");
+                throw std::runtime_error(ERROR_DIM_MSG);
 
             DISPATCH_ACCORDING_TO_SE(mln::morpho::closing);
             return res;
         }
 
-        auto* image_ = image.cast_to<T, 2>();
+        auto* image_ = image.cast_to<T, MAX_NDIM>();
         if (image_ == nullptr)
-            throw std::runtime_error("The input image dimension is \
-                                      not supported.");
+            throw std::runtime_error(ERROR_DIM_MSG);
 
         DISPATCH_ACCORDING_TO_SE(mln::morpho::closing);
         return res;

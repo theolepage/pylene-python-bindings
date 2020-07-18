@@ -15,7 +15,7 @@
 #include <pybind11/numpy.h>
 
 namespace py = pybind11;
-static const auto PYARR_PARAMS = py::array::c_style | py::array::forcecast;
+static constexpr auto PYARR_PARAMS = py::array::c_style | py::array::forcecast;
 
 #include "py_se.hpp"
 #include "py_morpho.hpp"
