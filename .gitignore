@@ -1,2 +1,5 @@
 .vscode/
 build/
+*.pyc
+__pycache__
+*.so

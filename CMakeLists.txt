@@ -18,3 +18,20 @@ set(SRC
 )
 pybind11_add_module(pylene SHARED ${SRC})
 target_link_libraries(pylene PRIVATE Pylene::Pylene)
+
+# Tests
+add_custom_target(test)
+add_dependencies(test pylene)
+find_package(Python3 COMPONENTS Interpreter)
+if(Python3_Interpreter_FOUND)
+    add_custom_command(TARGET test
+        COMMAND cp "${CMAKE_BINARY_DIR}/pylene*.so" "${CMAKE_SOURCE_DIR}/tests/"
+        COMMAND Python3::Interpreter -m unittest discover -v -s ${CMAKE_SOURCE_DIR}/tests
+        COMMAND rm "${CMAKE_SOURCE_DIR}/tests/pylene*.so"
+        WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}/tests
+        )
+else()
+    add_custom_command(TARGET test
+        COMMAND echo "Python3 was not found, you will not be able to launch tests")
+    MESSAGE(WARNING "Python3 was not found, you will not be able to launch tests")
+endif()
