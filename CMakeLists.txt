@@ -32,6 +32,7 @@ if(Python3_Interpreter_FOUND)
     add_custom_command(TARGET test
         COMMAND cp "${CMAKE_BINARY_DIR}/pylene*.so" "${CMAKE_SOURCE_DIR}/tests/"
         COMMAND Python3::Interpreter -m unittest discover -v -s ${CMAKE_SOURCE_DIR}/tests
+        COMMAND rm "${CMAKE_SOURCE_DIR}/tests/pylene*.so"
         WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}/tests
         )
 else()

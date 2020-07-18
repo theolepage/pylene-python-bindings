@@ -14,19 +14,20 @@ def mse(imgA, imgB):
     print(err)
     return err
 
-def are_same(out, ref):
+def are_same(out, ref, debug=False):
     if not np.array_equal(out.shape, ref.shape):
         print("Shape Error: out image does not have the same shape as ref")
         return False
     mse_res = mse(out, ref)
     if mse_res > 0:
         print(f"MSE : {mse_res}")
-        f = plt.figure()
-        f.add_subplot(1,2, 1)
-        plt.imshow(np.rot90(ref,2))
-        f.add_subplot(1,2, 2)
-        plt.imshow(np.rot90(out,2))
-        plt.show(block=True)
+        if debug:
+            f = plt.figure()
+            f.add_subplot(1,2, 1)
+            plt.imshow(ref)
+            f.add_subplot(1,2, 2)
+            plt.imshow(out)
+            plt.show(block=True)
         return False
     return True
 
