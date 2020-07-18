@@ -4,17 +4,16 @@ Python bindings for [Pylene](https://gitlab.lrde.epita.fr/olena/pylene), a C++ i
 
 ## Build
 
-1. Create the build directory at the root of the repository: `mkdir build && cd build` (for releases) or `mkdir build_debug && cd build_debug`
+1. `mkdir build && cd build`
 2. `conan remote add lrde-public https://artifactory.lrde.epita.fr/artifactory/api/conan/lrde-public`
 3. `conan install .. --build missing -s compiler.cppstd=20`
 4.  `cmake ..; make`
 
-Alternatively, you can run our test suite by typing `make test` in the build directory.
-It is noteworthy that toggling `ALWAYS_SHOW_IMAGES` in `tests/test_example.py` will show a comparison between output and expected images for each test.
+Alternatively, you can run our test suite by typing `make test`. By toggling `ALWAYS_SHOW_IMAGES` in `tests/test_example.py`, a comparison between output and expected test images will be shown.
 
 ## Usage
 
-Start a Python3 interpreter in the folder of the generated `pylene.cpython-38-x86_64-linux-gnu.so`.
+Start a Python3 interpreter in the folder of the generated `pylene.*.so`.
 
 ```python
 from skimage import data
