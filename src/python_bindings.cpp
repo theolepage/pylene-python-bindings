@@ -17,8 +17,8 @@
 namespace py = pybind11;
 static const auto PYARR_PARAMS = py::array::c_style | py::array::forcecast;
 
-#include "py_se.hxx"
-#include "py_morpho.hxx"
+#include "py_se.hpp"
+#include "py_morpho.hpp"
 
 /** Bind supported methods, for a single type T, to a Pybind class.
  *

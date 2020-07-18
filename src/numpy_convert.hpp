@@ -1,5 +1,5 @@
 /**
- * @file numpy_convert.hxx
+ * @file numpy_convert.hpp
  *
  * @brief Utilities functions to convert a numpy array to a
  *        mln::ndbuffer_image and vice-versa.

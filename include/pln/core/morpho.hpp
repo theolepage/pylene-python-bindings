@@ -1,3 +1,17 @@
+/**
+ * @file morpho.hpp
+ *
+ * @brief Functions to apply mathematical morphology operators on a
+ *        mln::ndbuffer_image according to a given structuring element.
+ *
+ * @author Aymeric Fages
+ * @author Nicolas Blin
+ * @author Pierrick Made
+ * @author Theo Lepage
+ * @author Youssef Benkirane
+ *
+ */
+
 #pragma once
 
 #include <mln/core/image/ndimage.hpp>
@@ -11,6 +25,12 @@
 #include "pln_rect2d.hpp"
 #include "pln_mask2d.hpp"
 
+/** Even though using the define directive of the preprocessor is usually a
+ *  bad practice, in this situation it allows us to avoid code duplication.
+ *  After many attempts, we were not able to factorize the following code
+ *  in a C++ function as the return type cannot be deduced.
+ *  Indeed, the parent class of all structuring elements is templated.
+ */
 #define DISPATCH_ACCORDING_TO_SE(function)                                     \
     do                                                                         \
     {                                                                          \
@@ -30,6 +50,17 @@
     while (false)
 
 namespace pln {
+    /** Apply a morphological dilation on a mln::ndbuffer_image.
+     *
+     * @tparam T The type of the mln::ndbuffer_image values.
+     * @param image The input image on which the dilation will be applied.
+     * @param se The structuring element used for the dilation.
+     *
+     * @returns The resulting mln::ndbuffer_image after the dilation is applied.
+     *
+     * @throws std::runtime_error Thrown if image or se is not supported.
+     *
+     */
     template <typename T>
     mln::ndbuffer_image dilation(mln::ndbuffer_image image, se_t* se)
     {
@@ -55,6 +86,17 @@ namespace pln {
         return res;
     }
 
+    /** Apply a morphological erosion on a mln::ndbuffer_image.
+     *
+     * @tparam T The type of the mln::ndbuffer_image values.
+     * @param image The input image on which the erosion will be applied.
+     * @param se The structuring element used for the erosion.
+     *
+     * @returns The resulting mln::ndbuffer_image after the erosion is applied.
+     *
+     * @throws std::runtime_error Thrown if image or se is not supported.
+     *
+     */
     template <typename T>
     mln::ndbuffer_image erosion(mln::ndbuffer_image image, se_t* se)
     {
@@ -80,6 +122,17 @@ namespace pln {
         return res;
     }
 
+    /** Apply a morphological opening on a mln::ndbuffer_image.
+     *
+     * @tparam T The type of the mln::ndbuffer_image values.
+     * @param image The input image on which the opening will be applied.
+     * @param se The structuring element used for the opening.
+     *
+     * @returns The resulting mln::ndbuffer_image after the opening is applied.
+     *
+     * @throws std::runtime_error Thrown if image or se is not supported.
+     *
+     */
     template <typename T>
     mln::ndbuffer_image opening(mln::ndbuffer_image image, se_t* se)
     {
@@ -105,6 +158,17 @@ namespace pln {
         return res;
     }
 
+    /** Apply a morphological closing on a mln::ndbuffer_image.
+     *
+     * @tparam T The type of the mln::ndbuffer_image values.
+     * @param image The input image on which the closing will be applied.
+     * @param se The structuring element used for the closing.
+     *
+     * @returns The resulting mln::ndbuffer_image after the closing is applied.
+     *
+     * @throws std::runtime_error Thrown if image or se is not supported.
+     *
+     */
     template <typename T>
     mln::ndbuffer_image closing(mln::ndbuffer_image image, se_t* se)
     {

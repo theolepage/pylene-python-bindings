@@ -1,5 +1,5 @@
 /**
- * @file py_morpho.hxx
+ * @file py_morpho.hpp
  *
  * @brief Class, accessible through Python, to call Pylene mathematical
  *        morphology operators.
@@ -14,7 +14,7 @@
 
 #pragma once
 
-#include "numpy_convert.hxx"
+#include "numpy_convert.hpp"
 
 #include "../include/pln/core/morpho.hpp"
 

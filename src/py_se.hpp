@@ -1,5 +1,5 @@
 /**
- * @file py_se.hxx
+ * @file py_se.hpp
  *
  * @brief Class, accessible through Python, to instantiate a Pylene
  *        structuring element.
