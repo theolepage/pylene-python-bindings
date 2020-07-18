@@ -11,7 +11,6 @@ def open_image(image_path):
 def mse(imgA, imgB):
     err = np.sum((imgA.astype("float") - imgB.astype("float")) ** 2)
     err /= float(imgA.shape[0] * imgA.shape[1])
-    print(err)
     return err
 
 def are_same(out, ref, debug=False):
@@ -19,17 +18,20 @@ def are_same(out, ref, debug=False):
         print("Shape Error: out image does not have the same shape as ref")
         return False
     mse_res = mse(out, ref)
-    if mse_res > 0:
+
+    if debug:
         print(f"MSE : {mse_res}")
-        if debug:
-            f = plt.figure()
-            f.add_subplot(1,2, 1)
-            plt.imshow(ref)
-            f.add_subplot(1,2, 2)
-            plt.imshow(out)
-            plt.show(block=True)
-        return False
-    return True
+
+        f = plt.figure()
+        actual_plot = f.add_subplot(1, 2, 2)
+        plt.imshow(out)
+        actual_plot.set_xlabel('Actual')
+        ref_plot = f.add_subplot(1, 2, 1)
+        plt.imshow(ref)
+        ref_plot.set_xlabel('Expected')
+        plt.show(block=True)
+
+    return mse_res == 0
 
 lena = open_image("lena.png")
 lena_gray = open_image("lena_gray.png")
@@ -62,7 +64,7 @@ class TestClosing(unittest.TestCase):
 
     def test_lena_gray_disc2(self):
         ref_closing_disc2 = open_image('lena_gray_closing_disc2.png')
-        out_closing_disc2 = pln.morpho.closing(lena, pln.se.disc(2))
+        out_closing_disc2 = pln.morpho.closing(lena_gray, pln.se.disc(2))
         self.assertTrue(are_same(out_closing_disc2, ref_closing_disc2))
 
     def test_lena_gray_rect0531(self):
@@ -87,7 +89,7 @@ class TestMSE(unittest.TestCase):
     def test_lena_disc10vsdisc11(self):
         ref_opening_disc10 = open_image('lena_opening_disc10.png')
         out_opening_disc11 = pln.morpho.opening(lena, pln.se.disc(11))
-        self.assertFalse(are_same(out_opening_disc11, ref_opening_disc10))
+        self.assertFalse(are_same(out_opening_disc11, ref_opening_disc10, False))
 
 if __name__ == '__main__':
     unittest.main()
