@@ -1,4 +1,4 @@
-# CPPA
+# Python bindings for Pylene
 
 Python bindings for [Pylene](https://gitlab.lrde.epita.fr/olena/pylene), a C++ image processing library.
 
@@ -7,13 +7,13 @@ Python bindings for [Pylene](https://gitlab.lrde.epita.fr/olena/pylene), a C++ i
 1. `mkdir build && cd build`
 2. `conan remote add lrde-public https://artifactory.lrde.epita.fr/artifactory/api/conan/lrde-public`
 3. `conan install .. --build missing -s compiler.cppstd=20`
-4.  `cmake ..; make`
+4.  `cmake .. && make`
 
-Alternatively, you can run our test suite by typing `make test`. By toggling `ALWAYS_SHOW_IMAGES` in `tests/test_example.py`, a comparison between output and expected test images will be shown.
+In order to run our test suite you have to type `make test`. Setting `ALWAYS_SHOW_IMAGES = True` in `tests/test_example.py` will show a comparison between output and expected images for each test.
 
 ## Usage
 
-Start a Python3 interpreter in the folder of the generated `pylene.*.so`.
+Start a Python 3 interpreter in the folder of the generated `pylene.*.so`.
 
 ```python
 from skimage import data
