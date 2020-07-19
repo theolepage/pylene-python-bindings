@@ -2,7 +2,6 @@ import numpy as np
 import pylene as pln
 import unittest
 import matplotlib.pyplot as plt
-from skimage import data
 
 ALWAYS_SHOW_IMAGES = False
 

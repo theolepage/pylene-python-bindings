@@ -9,7 +9,7 @@ Python bindings for [Pylene](https://gitlab.lrde.epita.fr/olena/pylene), a C++ i
 3. `conan install .. --build missing -s compiler.cppstd=20`
 4.  `cmake .. && make`
 
-In order to run our test suite you have to type `make test`. Setting `ALWAYS_SHOW_IMAGES = True` in `tests/test_example.py` will show a comparison between output and expected images for each test.
+In order to run our test suite you have to type `make test`. Make sure to install beforehand the python dependencies with `pip3 install -r tests/requirements.txt`. (*Note: setting `ALWAYS_SHOW_IMAGES = True` in `tests/test_example.py` will show a comparison between output and expected images for each test.*)
 
 ## Usage
 
